@@ -1,0 +1,3 @@
+# Directory keep
+
+This file ensures the data/cleaned directory is tracked by git even when empty.
