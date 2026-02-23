@@ -1,5 +1,5 @@
 """
-🏠 Estate Intelligence — Real Estate Property Price Prediction App
+Estate Intelligence — Real Estate Property Price Prediction App
 Built with Streamlit · Pandas · NumPy · Matplotlib · Joblib
 """
 
@@ -17,7 +17,6 @@ import matplotlib.pyplot as plt
 # ──────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="Estate Intelligence",
-    page_icon="🏠",
     layout="wide",
 )
 
@@ -251,39 +250,44 @@ st.markdown("""
 # SIDEBAR
 # ──────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("## 🏠 Estate Intelligence")
+    st.markdown("## Estate Intelligence")
     st.markdown("AI-powered real estate price prediction using a trained Random Forest model.")
 
     st.markdown("---")
     st.markdown("**Team:** Estate Intelligence")
     st.markdown("---")
 
-    st.markdown("### 📦 Model Status")
+    # ── Model status indicator ──
+    st.markdown("### Model Status")
     if model is not None:
         st.markdown('<span class="status-badge status-ready">✅ Model Ready</span>',
                     unsafe_allow_html=True)
         st.success("Tuned Random Forest loaded successfully.", icon="✅")
     else:
-        st.markdown('<span class="status-badge status-estimate">⚠️ Estimate Mode</span>',
+        st.markdown('<span class="status-badge status-estimate">Using Estimate Mode</span>',
                     unsafe_allow_html=True)
-        st.warning("Model file not found. Using placeholder formula.", icon="⚠️")
+        st.warning("Model file not found. Using placeholder formula.")
 
     st.markdown("---")
-    st.markdown("### 📖 How to Use")
+
+    # ── Instructions ──
+    st.markdown("### How to Use")
     st.markdown("""
-    1. **Predict** — Fill in property details in Tab 1 and click *Predict Price*
-    2. **Insights** — View feature importances and correlation heatmap in Tab 2
-    3. **Batch** — Upload a CSV in Tab 3 to predict multiple properties at once
-    4. **Download** — Export batch results as CSV
+    1. **Predict** — Fill in property details in Tab 1 and click *Predict Price*.
+    2. **Insights** — View feature importances and correlation heatmap in Tab 2.
+    3. **Batch** — Upload a CSV in Tab 3 to predict multiple properties at once.
+    4. **Download** — Export batch results as CSV.
     """)
 
 
 # ──────────────────────────────────────────────────────────────
 # MAIN HEADER
 # ──────────────────────────────────────────────────────────────
-st.markdown('<p class="main-title">🏠 Estate Intelligence</p>', unsafe_allow_html=True)
-st.markdown('<p class="sub-title">Predict residential property prices with machine learning</p>',
-            unsafe_allow_html=True)
+st.markdown('<p class="main-title">Estate Intelligence</p>', unsafe_allow_html=True)
+st.markdown(
+    '<p class="sub-title">Predict residential property prices with machine learning</p>',
+    unsafe_allow_html=True,
+)
 st.markdown("")
 
 
@@ -291,9 +295,9 @@ st.markdown("")
 # TABS
 # ──────────────────────────────────────────────────────────────
 tab1, tab2, tab3 = st.tabs([
-    "🏡 Predict Price",
-    "📊 Data Insights",
-    "📂 Batch Prediction"
+    "Predict Price",
+    "Data Insights",
+    "Batch Prediction"
 ])
 
 
@@ -307,31 +311,30 @@ with tab1:
 
     with col1:
         area = st.number_input(
-    "📐 Area (sq ft)",
+    "Area (sq ft)",
     min_value=500,
     max_value=16200,
     value=3000,
     step=50,
     help="Type the property area in square feet"
 )
-        st.info("ℹ️ Model trained on areas **1,650 – 16,200 sq ft**. "
-                "Values outside this range may give less accurate predictions.",
-                icon="ℹ️")
-        bedrooms        = st.selectbox("🛏️ Bedrooms", options=[1, 2, 3, 4, 5, 6], index=2)
-        bathrooms       = st.selectbox("🚿 Bathrooms", options=[1, 2, 3, 4], index=0)
-        stories         = st.selectbox("🏢 Stories", options=[1, 2, 3, 4], index=0)
-        parking         = st.selectbox("🚗 Parking Spots", options=[0, 1, 2, 3], index=0)
-        furnishing      = st.selectbox("🪑 Furnishing Status",
+        st.info("Model trained on areas 1,650 – 16,200 sq ft. "
+                "Values outside this range may give less accurate predictions.")
+        bedrooms        = st.selectbox("Bedrooms", options=[1, 2, 3, 4, 5, 6], index=2)
+        bathrooms       = st.selectbox("Bathrooms", options=[1, 2, 3, 4], index=0)
+        stories         = st.selectbox("Stories", options=[1, 2, 3, 4], index=0)
+        parking         = st.selectbox("Parking Spots", options=[0, 1, 2, 3], index=0)
+        furnishing      = st.selectbox("Furnishing Status",
                                        options=["Unfurnished", "Semi-Furnished", "Furnished"],
                                        index=0)
 
     with col2:
-        mainroad        = st.radio("🛣️ Main Road Access",  ["Yes", "No"], index=0, horizontal=True)
-        guestroom       = st.radio("🚪 Guest Room",         ["Yes", "No"], index=1, horizontal=True)
-        basement        = st.radio("🏗️ Basement",           ["Yes", "No"], index=1, horizontal=True)
-        hotwaterheating = st.radio("♨️ Hot Water Heating",  ["Yes", "No"], index=1, horizontal=True)
-        airconditioning = st.radio("❄️ Air Conditioning",   ["Yes", "No"], index=1, horizontal=True)
-        prefarea        = st.radio("⭐ Preferred Area",      ["Yes", "No"], index=1, horizontal=True)
+        mainroad        = st.radio("Main Road Access",  ["Yes", "No"], index=0, horizontal=True)
+        guestroom       = st.radio("Guest Room",         ["Yes", "No"], index=1, horizontal=True)
+        basement        = st.radio("Basement",           ["Yes", "No"], index=1, horizontal=True)
+        hotwaterheating = st.radio("Hot Water Heating",  ["Yes", "No"], index=1, horizontal=True)
+        airconditioning = st.radio("Air Conditioning",   ["Yes", "No"], index=1, horizontal=True)
+        prefarea        = st.radio("Preferred Area",      ["Yes", "No"], index=1, horizontal=True)
 
     # Encode Yes/No inputs to 1/0
     yes_no         = lambda x: 1 if x == "Yes" else 0
@@ -339,7 +342,8 @@ with tab1:
 
     st.markdown("")
 
-    if st.button("🔮 Predict Price", use_container_width=True, key="single_predict"):
+    # ── Predict button ──
+    if st.button("Predict Price", use_container_width=True, key="single_predict"):
         # Store prediction in session state so it persists across rerenders
         st.session_state["predicted"] = predict_price(
             area, bedrooms, bathrooms, stories,
@@ -364,7 +368,7 @@ with tab1:
         )
 
         # Feature importance chart using REAL model values
-        st.markdown("#### 📊 Feature Importance (Trained Random Forest)")
+        st.markdown("#### Feature Importance (Trained Random Forest)")
         st.caption("How much each feature contributed to the model's predictions.")
 
         fi_sorted = dict(sorted(FEATURE_IMPORTANCES.items(), key=lambda x: x[1]))
@@ -407,7 +411,7 @@ with tab1:
 # TAB 2 — DATA INSIGHTS
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 with tab2:
-    st.markdown("### 📊 Model & Data Insights")
+    st.markdown("### Model & Data Insights")
 
     fi_img_path   = os.path.join(os.path.dirname(__file__), "notebooks", "feature_importance.png")
     corr_img_path = os.path.join(os.path.dirname(__file__), "notebooks", "correlation_heatmap.png")
@@ -433,23 +437,23 @@ with tab2:
     st.markdown("#### 🔍 Key Findings")
     st.markdown("""
     <div class="insight-card">
-        🏆 <strong>Area dominates (47.8%)</strong> — Property size is by far the strongest predictor of price.
+        <strong>Area dominates (47.8%)</strong> — Property size is by far the strongest predictor of price.
         Larger homes consistently command higher prices in this dataset.
     </div>
     <div class="insight-card">
-        🚿 <strong>Bathrooms are second (15.8%)</strong> — Number of bathrooms has strong influence,
+        <strong>Bathrooms are second (15.8%)</strong> — Number of bathrooms has strong influence,
         likely because it correlates with overall property quality and size.
     </div>
     <div class="insight-card">
-        ❄️ <strong>Air Conditioning matters (6.8%)</strong> — Presence of AC significantly
+        <strong>Air Conditioning matters (6.8%)</strong> — Presence of AC significantly
         adds to property value, reflecting buyer preferences in the Indian market.
     </div>
     <div class="insight-card">
-        🏢 <strong>Stories & Parking (5.2%, 4.8%)</strong> — Multi-storey homes and parking
+        <strong>Stories & Parking (5.2%, 4.8%)</strong> — Multi-storey homes and parking
         availability contribute meaningfully to price.
     </div>
     <div class="insight-card">
-        🛣️ <strong>Main Road access has lowest impact (1.0%)</strong> — Despite being a common
+        <strong>Main Road access has lowest impact (1.0%)</strong> — Despite being a common
         amenity listed, it has the least influence on price among all features.
     </div>
     """, unsafe_allow_html=True)
@@ -476,7 +480,7 @@ with tab3:
         "parking": 1, "prefarea": 0, "furnishingstatus": 1
     }])
     st.download_button(
-        label="⬇️ Download Sample CSV Template",
+        label="Download Sample CSV Template",
         data=sample_data.to_csv(index=False),
         file_name="sample_input.csv",
         mime="text/csv",
@@ -487,15 +491,15 @@ with tab3:
 
     if uploaded_file is not None:
         df = pd.read_csv(uploaded_file)
-        st.markdown("#### 📄 Uploaded Data")
+        st.markdown("#### Uploaded Data")
         st.dataframe(df, use_container_width=True)
 
         missing_cols = [c for c in FEATURE_COLUMNS if c not in df.columns]
 
         if missing_cols:
-            st.error(f"❌ Missing columns: **{', '.join(missing_cols)}**. Please fix your CSV.")
+            st.error(f"Missing columns: **{', '.join(missing_cols)}**. Please fix your CSV.")
         else:
-            if st.button("🚀 Predict All", use_container_width=True, key="batch_predict"):
+            if st.button("Predict All", use_container_width=True, key="batch_predict"):
                 with st.spinner("Running predictions..."):
                     df["predicted_price"] = df.apply(
                         lambda row: predict_price(
@@ -509,12 +513,12 @@ with tab3:
                     )
                     df["predicted_price_INR"] = df["predicted_price"].apply(format_inr)
 
-                st.markdown("#### ✅ Predictions Complete")
+                st.markdown("#### Predictions Complete")
                 st.dataframe(df, use_container_width=True)
 
                 export_df = df.drop(columns=["predicted_price"])
                 st.download_button(
-                    label="⬇️ Download Results as CSV",
+                    label="Download Results as CSV",
                     data=export_df.to_csv(index=False),
                     file_name="estate_intelligence_predictions.csv",
                     mime="text/csv",
@@ -527,8 +531,8 @@ with tab3:
 # ──────────────────────────────────────────────────────────────
 st.markdown(
     '<div class="footer">'
-    "⚠️ Predictions are estimates only. Not financial advice. "
-    "| 🏠 Estate Intelligence · Built with Streamlit"
+    "Predictions are estimates only. Not financial advice. "
+    "| Estate Intelligence · Built with Streamlit"
     "</div>",
     unsafe_allow_html=True,
 )
